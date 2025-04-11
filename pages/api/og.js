@@ -10,6 +10,36 @@ export default async function handler(req) {
     const results = searchParams.get('results');
     const error = searchParams.get('error');
 
+    if (error === 'auth') {
+      return new ImageResponse(
+        (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+              height: '100%',
+              backgroundColor: '#f5f5f5',
+              padding: '40px',
+            }}
+          >
+            <h1 style={{ color: '#333', marginBottom: '20px', fontSize: '32px' }}>
+              Sign in Required
+            </h1>
+            <p style={{ color: '#666', fontSize: '24px', textAlign: 'center' }}>
+              Please sign in with Farcaster to search your bookmarks
+            </p>
+          </div>
+        ),
+        {
+          width: 1200,
+          height: 630,
+        }
+      );
+    }
+
     if (error) {
       return new ImageResponse(
         (

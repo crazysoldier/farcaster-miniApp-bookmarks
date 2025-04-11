@@ -32,8 +32,22 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       const { untrustedData } = req.body;
-      if (!untrustedData) {
-        throw new Error('No untrustedData provided');
+      
+      // Check if user is authenticated
+      if (!untrustedData?.fid) {
+        return res.status(200).json({
+          frames: {
+            version: "vNext",
+            image: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?error=auth`,
+            buttons: [
+              {
+                label: "Sign in with Farcaster",
+                action: "link",
+                target: "https://warpcast.com/~/sign-in"
+              }
+            ]
+          }
+        });
       }
 
       const searchTerm = untrustedData.messageBytes ? 
