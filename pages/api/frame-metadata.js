@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
   try {
     return res.status(200).json({
-      "frames": {
+      "frame": {
         "version": "vNext",
         "image": `${baseUrl}/api/og`,
         "input": {

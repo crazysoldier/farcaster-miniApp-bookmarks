@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   // Handle GET request
   if (req.method === 'GET') {
     return res.status(200).json({
-      frames: {
+      frame: {
         version: "vNext",
         image: `${baseUrl}/api/og`,
         input: {
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
       // Check if user is authenticated
       if (!untrustedData?.fid) {
         return res.status(200).json({
-          frames: {
+          frame: {
             version: "vNext",
             image: `${baseUrl}/api/og?error=auth`,
             buttons: [
@@ -68,7 +68,7 @@ export default async function handler(req, res) {
       ];
       
       return res.status(200).json({
-        frames: {
+        frame: {
           version: "vNext",
           image: `${baseUrl}/api/og?results=${encodeURIComponent(JSON.stringify(mockBookmarks))}`,
           buttons: [
@@ -83,7 +83,7 @@ export default async function handler(req, res) {
     } catch (error) {
       console.error('Error processing frame:', error);
       return res.status(500).json({
-        frames: {
+        frame: {
           version: "vNext",
           image: `${baseUrl}/api/og?error=true`,
           buttons: [
