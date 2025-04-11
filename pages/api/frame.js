@@ -1,5 +1,3 @@
-import { getBookmarks } from '@farcaster/core';
-
 export default async function handler(req, res) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -53,22 +51,22 @@ export default async function handler(req, res) {
       const searchTerm = untrustedData.messageBytes ? 
         Buffer.from(untrustedData.messageBytes, 'base64').toString() : '';
       
-      // Get bookmarks for the user
-      const bookmarks = await getBookmarks(untrustedData.fid);
-      
-      // Filter bookmarks
-      const filteredBookmarks = bookmarks.filter(bookmark => {
-        return !searchTerm || 
-          bookmark.text.toLowerCase().includes(searchTerm.toLowerCase());
-      });
-
-      // Return the first 5 matching bookmarks
-      const results = filteredBookmarks.slice(0, 5);
+      // For now, return a mock response since we can't access bookmarks directly
+      const mockBookmarks = [
+        {
+          hash: '1',
+          text: 'This is a sample bookmark about ' + (searchTerm || 'Farcaster'),
+          author: {
+            username: 'sample_user',
+            pfp: 'https://warpcast.com/~/channel/avatar.png'
+          }
+        }
+      ];
       
       return res.status(200).json({
         frames: {
           version: "vNext",
-          image: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?results=${encodeURIComponent(JSON.stringify(results))}`,
+          image: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?results=${encodeURIComponent(JSON.stringify(mockBookmarks))}`,
           buttons: [
             {
               label: "Search Again",
