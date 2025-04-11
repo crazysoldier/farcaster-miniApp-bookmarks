@@ -16,7 +16,7 @@
   "regions": ["iad1"],
   "build": {
     "env": {
-      "NEXT_PUBLIC_BASE_URL": "https://farcaster-mini-app-bookmarks.vercel.app"
+      "NEXT_PUBLIC_BASE_URL": "https://farcaster-mini-app.vercel.app"
     }
   }
 } 

@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  const baseUrl = 'https://farcaster-mini-app-bookmarks.vercel.app';
+  const baseUrl = 'https://farcaster-mini-app.vercel.app';
 
   // Handle GET request
   if (req.method === 'GET') {
