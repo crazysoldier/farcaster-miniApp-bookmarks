@@ -9,23 +9,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  // Ensure we have the base URL
-  if (!process.env.NEXT_PUBLIC_BASE_URL) {
-    console.error('NEXT_PUBLIC_BASE_URL is not set');
-    return res.status(500).json({
-      frames: {
-        version: "vNext",
-        image: "https://placehold.co/1200x630/ef4444/ffffff?text=Configuration+Error",
-        buttons: [
-          {
-            label: "Try Again",
-            action: "post",
-            target: `${req.headers.host}/api/frame`
-          }
-        ]
-      }
-    });
-  }
+  const baseUrl = 'https://farcaster-mini-app-bookmarks.vercel.app';
 
   if (req.method === 'POST') {
     try {
@@ -36,7 +20,7 @@ export default async function handler(req, res) {
         return res.status(200).json({
           frames: {
             version: "vNext",
-            image: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?error=auth`,
+            image: `${baseUrl}/api/og?error=auth`,
             buttons: [
               {
                 label: "Sign in with Farcaster",
@@ -66,12 +50,12 @@ export default async function handler(req, res) {
       return res.status(200).json({
         frames: {
           version: "vNext",
-          image: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?results=${encodeURIComponent(JSON.stringify(mockBookmarks))}`,
+          image: `${baseUrl}/api/og?results=${encodeURIComponent(JSON.stringify(mockBookmarks))}`,
           buttons: [
             {
               label: "Search Again",
               action: "post",
-              target: `${process.env.NEXT_PUBLIC_BASE_URL}/api/frame`
+              target: `${baseUrl}/api/frame`
             }
           ]
         }
@@ -81,12 +65,12 @@ export default async function handler(req, res) {
       return res.status(500).json({
         frames: {
           version: "vNext",
-          image: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?error=true`,
+          image: `${baseUrl}/api/og?error=true`,
           buttons: [
             {
               label: "Try Again",
               action: "post",
-              target: `${process.env.NEXT_PUBLIC_BASE_URL}/api/frame`
+              target: `${baseUrl}/api/frame`
             }
           ]
         }
@@ -98,7 +82,7 @@ export default async function handler(req, res) {
   return res.status(200).json({
     frames: {
       version: "vNext",
-      image: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og`,
+      image: `${baseUrl}/api/og`,
       input: {
         text: "Search bookmarks by keyword"
       },
@@ -106,7 +90,7 @@ export default async function handler(req, res) {
         {
           label: "Search",
           action: "post",
-          target: `${process.env.NEXT_PUBLIC_BASE_URL}/api/frame`
+          target: `${baseUrl}/api/frame`
         }
       ]
     }
