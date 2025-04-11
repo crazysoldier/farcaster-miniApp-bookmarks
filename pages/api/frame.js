@@ -9,6 +9,11 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
+  // Redirect GET requests to the metadata endpoint
+  if (req.method === 'GET') {
+    return res.redirect(307, '/api/frame-metadata');
+  }
+
   const baseUrl = 'https://farcaster-mini-app-bookmarks.vercel.app';
 
   if (req.method === 'POST') {
@@ -77,22 +82,4 @@ export default async function handler(req, res) {
       });
     }
   }
-
-  // GET request - return the initial frame
-  return res.status(200).json({
-    frames: {
-      version: "vNext",
-      image: `${baseUrl}/api/og`,
-      input: {
-        text: "Search bookmarks by keyword"
-      },
-      buttons: [
-        {
-          label: "Search",
-          action: "post",
-          target: `${baseUrl}/api/frame`
-        }
-      ]
-    }
-  });
 } 
