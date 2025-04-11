@@ -11,12 +11,34 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
+  // Ensure we have the base URL
+  if (!process.env.NEXT_PUBLIC_BASE_URL) {
+    console.error('NEXT_PUBLIC_BASE_URL is not set');
+    return res.status(500).json({
+      frames: {
+        version: "vNext",
+        image: "https://placehold.co/1200x630/ef4444/ffffff?text=Configuration+Error",
+        buttons: [
+          {
+            label: "Try Again",
+            action: "post",
+            target: `${req.headers.host}/api/frame`
+          }
+        ]
+      }
+    });
+  }
+
   if (req.method === 'POST') {
-    const { untrustedData } = req.body;
-    const searchTerm = untrustedData?.messageBytes ? 
-      Buffer.from(untrustedData.messageBytes, 'base64').toString() : '';
-    
     try {
+      const { untrustedData } = req.body;
+      if (!untrustedData) {
+        throw new Error('No untrustedData provided');
+      }
+
+      const searchTerm = untrustedData.messageBytes ? 
+        Buffer.from(untrustedData.messageBytes, 'base64').toString() : '';
+      
       // Get bookmarks for the user
       const bookmarks = await getBookmarks(untrustedData.fid);
       
