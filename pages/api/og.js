@@ -25,10 +25,10 @@ export default async function handler(req) {
               padding: '40px',
             }}
           >
-            <h1 style={{ color: '#ef4444', marginBottom: '20px' }}>
+            <h1 style={{ color: '#ef4444', marginBottom: '20px', fontSize: '32px' }}>
               Error Searching Bookmarks
             </h1>
-            <p style={{ color: '#666' }}>Please try again</p>
+            <p style={{ color: '#666', fontSize: '24px' }}>Please try again</p>
           </div>
         ),
         {
@@ -53,10 +53,10 @@ export default async function handler(req) {
               padding: '40px',
             }}
           >
-            <h1 style={{ color: '#333', marginBottom: '20px' }}>
+            <h1 style={{ color: '#333', marginBottom: '20px', fontSize: '32px' }}>
               Farcaster Bookmark Search
             </h1>
-            <p style={{ color: '#666' }}>Enter a keyword to search your bookmarks</p>
+            <p style={{ color: '#666', fontSize: '24px' }}>Enter a keyword to search your bookmarks</p>
           </div>
         ),
         {
@@ -80,7 +80,7 @@ export default async function handler(req) {
             padding: '40px',
           }}
         >
-          <h1 style={{ color: '#333', marginBottom: '20px', textAlign: 'center' }}>
+          <h1 style={{ color: '#333', marginBottom: '20px', textAlign: 'center', fontSize: '32px' }}>
             Search Results
           </h1>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -104,11 +104,11 @@ export default async function handler(req) {
                       borderRadius: '50%',
                     }}
                   />
-                  <span style={{ color: '#333', fontWeight: 'bold' }}>
+                  <span style={{ color: '#333', fontWeight: 'bold', fontSize: '20px' }}>
                     {bookmark.author.username}
                   </span>
                 </div>
-                <p style={{ color: '#666', margin: '0' }}>{bookmark.text}</p>
+                <p style={{ color: '#666', margin: '0', fontSize: '18px' }}>{bookmark.text}</p>
               </div>
             ))}
           </div>
@@ -120,6 +120,7 @@ export default async function handler(req) {
       }
     );
   } catch (e) {
+    console.error('Error generating image:', e);
     return new Response(`Failed to generate image`, {
       status: 500,
     });

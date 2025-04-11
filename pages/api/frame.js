@@ -1,9 +1,20 @@
 import { getBookmarks } from '@farcaster/core';
 
 export default async function handler(req, res) {
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Handle OPTIONS request
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method === 'POST') {
     const { untrustedData } = req.body;
-    const { searchTerm, authorFilter } = untrustedData;
+    const searchTerm = untrustedData?.messageBytes ? 
+      Buffer.from(untrustedData.messageBytes, 'base64').toString() : '';
     
     try {
       // Get bookmarks for the user
@@ -11,12 +22,8 @@ export default async function handler(req, res) {
       
       // Filter bookmarks
       const filteredBookmarks = bookmarks.filter(bookmark => {
-        const matchesSearch = !searchTerm || 
+        return !searchTerm || 
           bookmark.text.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesAuthor = !authorFilter || 
-          bookmark.author.username.toLowerCase().includes(authorFilter.toLowerCase());
-        
-        return matchesSearch && matchesAuthor;
       });
 
       // Return the first 5 matching bookmarks
